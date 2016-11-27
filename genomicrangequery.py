@@ -3,32 +3,32 @@ def solution(S, P, Q):
     m = len(P)
     a = list(S)
 
-    arrays = []
+    letters = []
     for i in xrange(m):
-        arrays += a[P[i]:Q[i] + 1]
+        letters += a[P[i]:Q[i] + 1]
 
-    lengths = [0] * m
+    queries = [0] * m
     for i in xrange(m):
-        lengths[i] = Q[i] + 1 - P[i]
+        queries[i] = Q[i] + 1 - P[i]
 
-    lengths_suff = [0] * (m + 1)
+    queries_suff = [0] * (m + 1)
     for i in xrange(1, m + 1):
-        lengths_suff[i] = lengths_suff[i - 1] + lengths[i - 1]
+        queries_suff[i] = queries_suff[i - 1] + queries[i - 1]
 
     counter = 1
-    len_arr = len(arrays)
+    len_arr = len(letters)
     for i in xrange(len_arr):
-        if i < lengths_suff[counter]:
-            arrays[i] = str(counter) + arrays[i]
+        if i < queries_suff[counter]:
+            letters[i] = str(counter) + letters[i]
         else:
             counter += 1
-            arrays[i] = str(counter) + arrays[i]
+            letters[i] = str(counter) + letters[i]
 
-    arrays.sort()
+    letters.sort()
 
     ans_let = [0] * m
     for i in xrange(m):
-        ans_let[i] = arrays[lengths_suff[i]]
+        ans_let[i] = letters[queries_suff[i]]
 
     for i in xrange(m):
         ans_let[i] = ans_let[i][1]
